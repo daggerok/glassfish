@@ -8,7 +8,8 @@ automated build for docker hub
 *tags based on `openjdk:8u151-jdk-alpine` image*
 
 - latest
-- 5.0
+- 5.0 (full profile)
+- 5.0-web (web profile)
 
 **Exposed ports**:
 
