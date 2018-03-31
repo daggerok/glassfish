@@ -1,21 +1,16 @@
 # Glassfish [![Build Status](https://travis-ci.org/daggerok/glassfish.svg?branch=master)](https://travis-ci.org/daggerok/glassfish)
 automated build for docker hub
 
-## Glassfish 5
-
 **Java EE 8**
 
-*tags based on `openjdk:8u151-jdk-alpine` image*
-
-- latest
-- 5.0 (full profile)
-- 5.0-web (web profile)
+- [5.0](https://github.com/daggerok/glassfish/blob/5.0/Dockerfile) (full profile based on [`openjdk:8u151-jdk-alpine` image](https://hub.docker.com/_/openjdk/) + JCE installed)
+- [5.0-web](https://github.com/daggerok/glassfish/blob/5.0-web/Dockerfile) (web profile based on [`openjdk:8u151-jdk-alpine` image](https://hub.docker.com/_/openjdk/) + JCE installed)
 
 **Exposed ports**:
 
 - 8080 - deployed apps http port
 
-### Usage (with healthcheck):
+### Usage (with health-check):
 
 ```
 

@@ -15,6 +15,14 @@ RUN apk --no-cache --update add busybox-suid bash wget ca-certificates unzip sud
  && sed -i "s/.*requiretty$/Defaults !requiretty/" /etc/sudoers \
  && adduser -h ${GLASSFISH_USER_HOME} -s /bin/bash -D -u 1025 ${GLASSFISH_USER} ${GLASSFISH_USER}-group \
  && usermod -a -G wheel ${GLASSFISH_USER} \
+ && wget --no-cookies \
+         --no-check-certificate \
+         --header "Cookie: oraclelicense=accept-securebackup-cookie" \
+                  "http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip" \
+         -O /tmp/jce_policy-8.zip \
+ && unzip -o /tmp/jce_policy-8.zip -d /tmp \
+ && mv -f ${JAVA_HOME}/lib/security ${JAVA_HOME}/lib/backup-security || true \
+ && mv -f /tmp/UnlimitedJCEPolicyJDK8 ${JAVA_HOME}/lib/security \
  && apk --no-cache --no-network --purge del busybox-suid ca-certificates unzip shadow \
  && rm -rf /var/cache/apk/* /tmp/*
 
