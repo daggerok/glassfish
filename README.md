@@ -3,8 +3,8 @@ automated build for docker hub
 
 **Java EE 8**
 
-- 5.0 (full profile based on `openjdk:8u151-jdk-alpine` image)
-- 5.0-web (web profile based on `openjdk:8u151-jdk-alpine` image)
+- [5.0](https://github.com/daggerok/glassfish/blob/5.0/Dockerfile) (full profile based on [`openjdk:8u151-jdk-alpine` image](https://hub.docker.com/_/openjdk/) + JCE installed)
+- [5.0-web](https://github.com/daggerok/glassfish/blob/5.0-web/Dockerfile) (web profile based on [`openjdk:8u151-jdk-alpine` image](https://hub.docker.com/_/openjdk/) + JCE installed)
 
 **Exposed ports**:
 
