@@ -4,8 +4,7 @@ MAINTAINER Maksim Kostromin https://github.com/daggerok
 ARG GLASSFISH_VERSION_ARG="5.0"
 ENV GLASSFISH_VERSION=${GLASSFISH_VERSION_ARG} \
     GLASSFISH_USER="glassfish5"
-#ENV GLASSFISH_FILE="glassfish-${GLASSFISH_VERSION}-web.zip" \
-ENV GLASSFISH_FILE="glassfish-${GLASSFISH_VERSION}.zip" \
+ENV GLASSFISH_FILE="glassfish-${GLASSFISH_VERSION}-web.zip" \
     GLASSFISH_USER_HOME="/home/${GLASSFISH_USER}"
 ENV GLASSFISH_HOME="${GLASSFISH_USER_HOME}/${GLASSFISH_USER}" \
     GLASSFISH_URL="http://download.oracle.com/glassfish/${GLASSFISH_VERSION}/release/${GLASSFISH_FILE}"
@@ -32,7 +31,7 @@ RUN wget ${GLASSFISH_URL} -O ${GLASSFISH_USER_HOME}/${GLASSFISH_FILE} \
  && rm -rf ${GLASSFISH_USER_HOME}/${GLASSFISH_FILE}
 
 #################################################### USAGE ######################################################
-# FROM daggerok/glassfish:5.0                                                                                   #
+# FROM daggerok/glassfish:5.0-web                                                                               #
 # HEALTHCHECK --timeout=2s --retries=22 \                                                                       #
 #         CMD wget -q --spider http://127.0.0.1:8080/my-service/health \                                        #
 #          || exit 1                                                                                            #
@@ -40,7 +39,7 @@ RUN wget ${GLASSFISH_URL} -O ${GLASSFISH_USER_HOME}/${GLASSFISH_FILE} \
 #################################################################################################################
 
 ###################################### DEBUG | MULTI-DEPLOYMENTS USAGE ##########################################
-# FROM daggerok/glassfish:5.0                                                                                   #
+# FROM daggerok/glassfish:5.0-web                                                                               #
 # # Debug:                                                                                                      #
 # ENV JAVA_OPTS="$JAVA_OPTS -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"                 #
 # EXPOSE 5005                                                                                                   #
