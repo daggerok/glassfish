@@ -1,21 +1,16 @@
 # Glassfish [![Build Status](https://travis-ci.org/daggerok/glassfish.svg?branch=master)](https://travis-ci.org/daggerok/glassfish)
 automated build for docker hub
 
-## Glassfish 5
-
 **Java EE 8**
 
-*tags based on `openjdk:8u151-jdk-alpine` image*
-
-- latest
-- 5.0 (full profile)
-- 5.0-web (web profile)
+- 5.0 (full profile based on `openjdk:8u151-jdk-alpine` image)
+- 5.0-web (web profile based on `openjdk:8u151-jdk-alpine` image)
 
 **Exposed ports**:
 
 - 8080 - deployed apps http port
 
-### Usage (with healthcheck):
+### Usage (with health-check):
 
 ```
 
@@ -31,7 +26,7 @@ ADD ./build/libs/*.war ${GLASSFISH_HOME}/glassfish/domains/domain1/autodeploy/my
 
 ```
 
-FROM daggerok/glassfish
+FROM daggerok/glassfish:5.0-web
 # Remote debug:
 ENV JAVA_OPTS="$JAVA_OPTS -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 "
 EXPOSE 5005
