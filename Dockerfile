@@ -50,7 +50,7 @@ RUN wget ${GLASSFISH_URL} -O ${GLASSFISH_USER_HOME}/${GLASSFISH_FILE} \
  && /bin/bash ${GLASSFISH_HOME}/bin/asadmin stop-domain domain1
 
 #################################################### USAGE ######################################################
-# FROM daggerok/glassfish:5.0                                                                                   #
+# FROM daggerok/glassfish                                                                                       #
 # HEALTHCHECK --timeout=2s --retries=22 \                                                                       #
 #         CMD wget -q --spider http://127.0.0.1:8080/my-service/health \                                        #
 #          || exit 1                                                                                            #
@@ -58,7 +58,7 @@ RUN wget ${GLASSFISH_URL} -O ${GLASSFISH_USER_HOME}/${GLASSFISH_FILE} \
 #################################################################################################################
 
 ###################################### DEBUG | MULTI-DEPLOYMENTS USAGE ##########################################
-# FROM daggerok/glassfish:5.0-apline                                                                            #
+# FROM daggerok/glassfish:apline                                                                                #
 # # Debug:                                                                                                      #
 # ENV JAVA_OPTS="$JAVA_OPTS -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"                 #
 # EXPOSE 5005                                                                                                   #
