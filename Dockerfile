@@ -2,8 +2,11 @@ FROM openjdk:8u151-jdk-alpine
 MAINTAINER Maksim Kostromin https://github.com/daggerok
 
 ARG GLASSFISH_VERSION_ARG="5.0"
+ARG GLASSFISH_ADMIN_PASSWORD_ARG="Admin.123"
 ENV GLASSFISH_VERSION=${GLASSFISH_VERSION_ARG} \
-    GLASSFISH_USER="glassfish5"
+    GLASSFISH_USER="glassfish5" \
+    GLASSFISH_ADMIN_USER="admin" \
+    GLASSFISH_ADMIN_PASSWORD=${GLASSFISH_ADMIN_PASSWORD_ARG}
 ENV GLASSFISH_FILE="glassfish-${GLASSFISH_VERSION}.zip" \
     GLASSFISH_USER_HOME="/home/${GLASSFISH_USER}"
 ENV GLASSFISH_HOME="${GLASSFISH_USER_HOME}/${GLASSFISH_USER}" \
@@ -30,8 +33,14 @@ USER ${GLASSFISH_USER}
 WORKDIR ${GLASSFISH_USER_HOME}
 
 CMD /bin/bash
-EXPOSE 8080
-ENTRYPOINT /bin/bash ${GLASSFISH_HOME}/bin/asadmin restart-domain domain1 \
+EXPOSE 8080 4848
+ENTRYPOINT echo "AS_ADMIN_PASSWORD=" >> ${GLASSFISH_HOME}/bin/tempfile \
+        && echo "AS_ADMIN_NEWPASSWORD=${GLASSFISH_ADMIN_PASSWORD}" >> ${GLASSFISH_HOME}/bin/tempfile \
+        && echo "AS_ADMIN_PASSWORD=${GLASSFISH_ADMIN_PASSWORD}" >> ${GLASSFISH_HOME}/bin/passwordfile \
+        && /bin/bash ${GLASSFISH_HOME}/bin/asadmin restart-domain domain1 \
+        && /bin/bash ${GLASSFISH_HOME}/bin/asadmin --user=${GLASSFISH_ADMIN_USER} --passwordfile=${GLASSFISH_HOME}/bin/tempfile change-admin-password \
+        && /bin/bash ${GLASSFISH_HOME}/bin/asadmin --host 0.0.0.0 --port 4848 --user=${GLASSFISH_ADMIN_USER} --passwordfile=${GLASSFISH_HOME}/bin/passwordfile enable-secure-admin \
+        && /bin/bash ${GLASSFISH_HOME}/bin/asadmin restart-domain domain1 \
         && tail -f ${GLASSFISH_HOME}/glassfish/domains/domain1/logs/server.log
 
 RUN wget ${GLASSFISH_URL} -O ${GLASSFISH_USER_HOME}/${GLASSFISH_FILE} \
