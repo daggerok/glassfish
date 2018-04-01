@@ -50,7 +50,7 @@ RUN wget ${GLASSFISH_URL} -O ${GLASSFISH_USER_HOME}/${GLASSFISH_FILE} \
  && /bin/bash ${GLASSFISH_HOME}/bin/asadmin stop-domain domain1
 
 #################################################### USAGE ######################################################
-# FROM daggerok/glassfish:5.0-web                                                                               #
+# FROM daggerok/glassfish:5.0-web-alpine                                                                        #
 # HEALTHCHECK --timeout=2s --retries=22 \                                                                       #
 #         CMD wget -q --spider http://127.0.0.1:8080/my-service/health \                                        #
 #          || exit 1                                                                                            #
