@@ -34,18 +34,20 @@ WORKDIR ${GLASSFISH_USER_HOME}
 
 CMD /bin/bash
 EXPOSE 8080 4848
-ENTRYPOINT echo "AS_ADMIN_PASSWORD=" >> ${GLASSFISH_HOME}/bin/tempfile \
-        && echo "AS_ADMIN_NEWPASSWORD=${GLASSFISH_ADMIN_PASSWORD}" >> ${GLASSFISH_HOME}/bin/tempfile \
-        && echo "AS_ADMIN_PASSWORD=${GLASSFISH_ADMIN_PASSWORD}" >> ${GLASSFISH_HOME}/bin/passwordfile \
-        && /bin/bash ${GLASSFISH_HOME}/bin/asadmin restart-domain domain1 \
-        && /bin/bash ${GLASSFISH_HOME}/bin/asadmin --user=${GLASSFISH_ADMIN_USER} --passwordfile=${GLASSFISH_HOME}/bin/tempfile change-admin-password \
-        && /bin/bash ${GLASSFISH_HOME}/bin/asadmin --host 0.0.0.0 --port 4848 --user=${GLASSFISH_ADMIN_USER} --passwordfile=${GLASSFISH_HOME}/bin/passwordfile enable-secure-admin \
-        && /bin/bash ${GLASSFISH_HOME}/bin/asadmin restart-domain domain1 \
+ENTRYPOINT /bin/bash ${GLASSFISH_HOME}/bin/asadmin start-domain domain1 \
         && tail -f ${GLASSFISH_HOME}/glassfish/domains/domain1/logs/server.log
 
 RUN wget ${GLASSFISH_URL} -O ${GLASSFISH_USER_HOME}/${GLASSFISH_FILE} \
  && unzip ${GLASSFISH_USER_HOME}/${GLASSFISH_FILE} -d ${GLASSFISH_USER_HOME} \
- && rm -rf ${GLASSFISH_USER_HOME}/${GLASSFISH_FILE}
+ && rm -rf ${GLASSFISH_USER_HOME}/${GLASSFISH_FILE} \
+ && echo "AS_ADMIN_PASSWORD=" >> ${GLASSFISH_HOME}/bin/tempfile \
+ && echo "AS_ADMIN_NEWPASSWORD=${GLASSFISH_ADMIN_PASSWORD}" >> ${GLASSFISH_HOME}/bin/tempfile \
+ && echo "AS_ADMIN_PASSWORD=${GLASSFISH_ADMIN_PASSWORD}" >> ${GLASSFISH_HOME}/bin/passwordfile \
+ && /bin/bash ${GLASSFISH_HOME}/bin/asadmin restart-domain domain1 \
+ && /bin/bash ${GLASSFISH_HOME}/bin/asadmin --user=${GLASSFISH_ADMIN_USER} --passwordfile=${GLASSFISH_HOME}/bin/tempfile change-admin-password \
+ && /bin/bash ${GLASSFISH_HOME}/bin/asadmin --host 0.0.0.0 --port 4848 --user=${GLASSFISH_ADMIN_USER} --passwordfile=${GLASSFISH_HOME}/bin/passwordfile enable-secure-admin \
+ && /bin/bash ${GLASSFISH_HOME}/bin/asadmin restart-domain domain1 \
+ && /bin/bash ${GLASSFISH_HOME}/bin/asadmin stop-domain domain1
 
 #################################################### USAGE ######################################################
 # FROM daggerok/glassfish:5.0                                                                                   #
