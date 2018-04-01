@@ -55,7 +55,7 @@ docker run --rm --name glassfish -d -p 4848:4848 -e GLASSFISH_ADMIN_PASSWORD=Adm
 
 ```
 
-FROM daggerok/glassfish:5.0-web
+FROM daggerok/glassfish:5.0-web-alpine
 ENV GLASSFISH_ADMIN_PASSWORD="Admin.123"
 
 ```
