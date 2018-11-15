@@ -58,7 +58,7 @@ RUN wget ${GLASSFISH_URL} -O ${GLASSFISH_USER_HOME}/${GLASSFISH_FILE} \
 #################################################################################################################
 
 ###################################### DEBUG | MULTI-DEPLOYMENTS USAGE ##########################################
-# FROM daggerok/glassfish:apline                                                                                #
+# FROM daggerok/glassfish:5.0-web-alpine                                                                        #
 # # Debug:                                                                                                      #
 # ENV JAVA_OPTS="$JAVA_OPTS -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"                 #
 # EXPOSE 5005                                                                                                   #
